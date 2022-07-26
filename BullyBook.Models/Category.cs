@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BullyBookWeb.Models
+namespace BullyBook.Models
 {
     public class Category
     {
