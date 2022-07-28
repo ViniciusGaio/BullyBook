@@ -3,8 +3,9 @@ using BullyBook.DataAccess.Repository.IRepository;
 using BullyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BullyBookWeb.Controllers
+namespace BullyBookWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -30,7 +31,7 @@ namespace BullyBookWeb.Controllers
 
         public IActionResult Create(Category obj)
         {
-            if(obj.Name == obj.DisplayOrder.ToString())
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("name", "The DisplayOrder cannot excactly match the Name.");
             }
@@ -47,10 +48,10 @@ namespace BullyBookWeb.Controllers
         //GET
         public IActionResult Edit(int? id)
         {
-            if(id==null || id== 0) return NotFound();
-         
+            if (id == null || id == 0) return NotFound();
+
             //var categoryFromDb = _db.Categories.Find(id);
-             var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
+            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             // var categoryFromDbSingle = _db.Categories.SingleOrDefault(u => u.Id == id);
 
             if (categoryFromDbFirst == null) return NotFound();
@@ -83,7 +84,7 @@ namespace BullyBookWeb.Controllers
             if (id == null || id == 0) return NotFound();
 
             //var categoryFromDb = _db.Categories.Find(id);
-             var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
+            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             // var categoryFromDbSingle = _db.Categories.SingleOrDefault(u => u.Id == id);
 
             if (categoryFromDbFirst == null) return NotFound();
@@ -103,8 +104,8 @@ namespace BullyBookWeb.Controllers
             _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
-           
-            
+
+
         }
     }
 }
