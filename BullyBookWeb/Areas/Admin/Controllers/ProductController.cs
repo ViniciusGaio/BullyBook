@@ -1,5 +1,6 @@
 ﻿using BullyBook.DataAccess.Repository.IRepository;
 using BullyBook.Models;
+using BullyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -24,25 +25,26 @@ namespace BullyBookWeb.Areas.Admin.Controllers
         //GET
         public IActionResult Upsert(int? id)
         {
-            Product product = new();
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(
-                u => new SelectListItem
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
                 {
-                    Text=u.Name,
-                    Value = u.Id.ToString()
-                });
-            IEnumerable<SelectListItem> CoverTypeList = _unitOfWork.CoverType.GetAll().Select(
-                u => new SelectListItem
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                CoverTypeList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem
                 {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                });
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
+            };
+            
             //create product
             if (id == null || id == 0) 
             {
-                ViewBag.CategoryList = CategoryList;
-                ViewData["CoverTypeList"] = CoverTypeList;
-                return View(product); 
+                //ViewBag.CategoryList = CategoryList;
+               // ViewData["CoverTypeList"] = CoverTypeList;
+                return View(productVM); 
             }
             //Update Product
             else
@@ -50,7 +52,7 @@ namespace BullyBookWeb.Areas.Admin.Controllers
 
             }
             
-            return View(product);
+            return View(productVM);
         }
         //POST
         [HttpPost]
