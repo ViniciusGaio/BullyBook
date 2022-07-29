@@ -1,6 +1,7 @@
 ﻿using BullyBook.DataAccess.Repository.IRepository;
 using BullyBook.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BullyBookWeb.Areas.Admin.Controllers
 {
@@ -19,42 +20,43 @@ namespace BullyBookWeb.Areas.Admin.Controllers
             var objCategoryList = _unitOfWork.CoverType.GetAll();
             return View(objCategoryList);
         }
+
         //GET
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
-        }
-        //POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(CoverType obj)
-        {
-            if (ModelState.IsValid)
+            Product product = new();
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(
+                u => new SelectListItem
+                {
+                    Text=u.Name,
+                    Value = u.Id.ToString()
+                });
+            IEnumerable<SelectListItem> CoverTypeList = _unitOfWork.CoverType.GetAll().Select(
+                u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+            //create product
+            if (id == null || id == 0) 
             {
-                _unitOfWork.CoverType.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Cover Type created successfully";
-                return RedirectToAction("Index");
+                ViewBag.CategoryList = CategoryList;
+                ViewData["CoverTypeList"] = CoverTypeList;
+                return View(product); 
             }
-            return View(obj);
-        }
+            //Update Product
+            else
+            {
 
-        //GET
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0) return NotFound();
-
-            var coverTypeFromDbFirst = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
-
-            if (coverTypeFromDbFirst == null) return NotFound();
-
-            return View(coverTypeFromDbFirst);
+            }
+            
+            return View(product);
         }
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public IActionResult Edit(CoverType obj)
+        public IActionResult Upsert(CoverType obj)
         {
             if (ModelState.IsValid)
             {
