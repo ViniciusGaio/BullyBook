@@ -32,4 +32,8 @@
     <ProjectReference Include="..\BullyBook.DataAccess\BullyBook.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>

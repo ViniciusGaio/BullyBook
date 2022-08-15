@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace BullyBook.Models
 {
@@ -17,20 +18,25 @@ namespace BullyBook.Models
         [Range(1,10000)]
         public double ListPrice { get; set; }
         [Range(1, 10000)]
+        [ValidateNever]
         public double FinalPrice { get; set; }
         [Range(1, 10000)]
         public double Price { get; set; }
         [Range(1, 10000)]
         public double Price50 { get; set; }
         [Range(1, 10000)]
+        
         public double Price100 { get; set; }
+        [ValidateNever]
         public string ImageUrl { get; set; }
 
         [Required]
         public int CategoryId { get; set; }
+        [ValidateNever]
         public Category Category { get; set; }
         [Required]
         public int CoverTypeId { get; set; }
+        [ValidateNever]
         public CoverType CoverType { get; set; }
     }
 }
