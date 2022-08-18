@@ -25,6 +25,7 @@ namespace BullyBook.DataAccess.Repository
                 objFromDb.FinalPrice = obj.FinalPrice;
                 objFromDb.Price = obj.FinalPrice;
                 objFromDb.ListPrice = obj.ListPrice;
+                objFromDb.Price = obj.Price;
                 objFromDb.Price50 = obj.Price50;
                 objFromDb.Price100 = obj.Price100;
                 objFromDb.CategoryId = obj.CategoryId;
